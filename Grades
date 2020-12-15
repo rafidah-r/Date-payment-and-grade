@@ -1,0 +1,52 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void){
+	FILE *file = fopen("scores.txt", "r");
+	FILE *newfile = fopen ("grades.txt", "w");
+	int i, line, sum, test1, test2 ,test3, test4;
+	double average;
+    char ch, name[50], id[50], grade[5];
+
+    if(file == NULL){
+		fprintf(stderr, "Unable to open file");
+		exit(1);
+	}
+
+    printf("Students who obtained A+ are:\n");
+    fprintf(newfile, "name\t ID\t test1\t test2\t test3\t test4\t sum\t average\t grade\n");
+    for(i=1; i<=100; i++){
+        fscanf(file, "%s\t %s\t %d\t %d\t %d\t %d\t %d\t %.f\t %s\n", &name, &id, &test1, &test2, &test3, &test4, &sum, &average, &grade);
+        sum = test1 + test2 + test3 + test4;
+        average = sum/4.0;
+
+        if(average >= 90){
+			grade[0]='A';
+			grade[1]='+';à
+			grade[2]='\0';
+            printf("%s	%s\n", name, id);
+			}
+		else if(average >=80 && average <90){
+			grade[0]='A';
+			grade[1]='\0';
+			}
+		else if(average >=70 && average <80){
+			grade[0]='B';
+			grade[1]='\0';
+			}
+		else if(average >=60 && average <70){
+			grade[0]='C';
+			grade[1]='\0';
+			}
+		else{
+			grade[0]='F';
+			grade[1]='\0';
+            }
+        fprintf(newfile, "%s\t %s\t %d\t %d\t %d\t %d\t %d\t %.f\t %s\n", name, id, test1, test2, test3, test4, sum, average, grade);
+        }
+
+    printf("New file successfully created.\n");
+	fclose(file);
+	fclose(newfile);
+	return 0;
+}
