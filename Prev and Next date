@@ -1,0 +1,117 @@
+#include <stdio.h>
+#include <conio.h>
+
+//declaration of date structure
+struct date {
+	int dd, mm, yy;
+} date;
+
+//function to get yesterday's (previous) date
+void prevdate(struct date *d) {
+	if (d->dd == 1) {
+		if (d->mm == 4 || d->mm == 6 || d->mm == 9 || d->mm == 11) {
+			d->dd = 31;
+			d->mm--;
+		}
+		else if (d->mm == 3) {
+			if ((d->yy % 4) == 0) {
+				if ((d->yy % 400) == 0) d->dd = 29;
+				else if ((d->yy % 100) == 0) d->dd = 28;
+				else d->dd = 29;
+			}
+			else d->dd = 28;
+			d->mm--;
+		}
+		else if (d->mm == 1) {
+			d->dd = 31;
+			d->mm = 12;
+			d->yy--;
+		}
+		else if (d->mm == 2) {
+			d->dd = 31;
+			d->mm--;
+		}
+		else {
+			d->dd = 30;
+			d->mm--;
+		}
+	}
+	else {
+		d->dd--;
+	}
+}
+
+//function to get next date
+void nextdate(struct date *nd) {
+	if (nd->dd == 31) {
+		if (nd->mm == 12) {
+			nd->dd = 1;
+			nd->mm = 1;
+			nd->yy++;
+		}
+		else {
+			nd->dd = 1;
+			nd->mm++;
+		}
+	}
+	else if (nd->mm == 4 || nd->mm == 6 || nd->mm == 9 || nd->mm == 11) {
+		if (nd->dd == 30) {
+			nd->dd = 1;
+			nd->mm++;
+		}
+		else nd->dd++;
+	}
+	else if (nd->mm == 2) {
+		if (nd->dd == 29) {
+			nd->dd = 1;
+			nd->mm++;
+		}
+		else if (nd->dd == 28) {
+			if ((nd->yy % 400) == 0) nd->dd++;
+			else if ((nd->yy % 100) == 0) {
+				nd->dd = 1;
+				nd->mm++;
+			}
+			else if ((nd->yy % 4) == 0) nd->dd++;
+			else {
+				nd->dd = 1;
+				nd->mm++;
+			}
+		}
+		else {
+			nd->dd++;
+		}
+	}
+	else {
+		nd->dd++;
+	}
+}
+
+int main(void) {
+	//date structure variable declaration
+	struct date td;
+
+	//Enter date
+	printf("Enter date in dd/mm/yyyy format: ");
+	scanf_s("%d/%d/%d", &td.dd, &td.mm, &td.yy);
+
+	//copy input data to another address
+	struct date nd, d;
+	d = td;
+	nd = td;
+
+	//get previous (yesterday) date
+	prevdate(&d);
+
+	//print yesterday's date
+	printf("Previous date is: ");
+	printf("%02d/%02d/%02d\n", d.dd, d.mm, d.yy);
+
+	nextdate(&nd);
+	//print next date
+	printf("Next date is: ");
+	printf("%02d/%02d/%02d\n", nd.dd, nd.mm, nd.yy);
+
+	_getch();
+	main();
+}
