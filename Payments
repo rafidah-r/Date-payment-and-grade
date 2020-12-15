@@ -1,0 +1,56 @@
+#include<stdio.h> 
+ 
+int main(void){ 
+    int b, m, i, pp, pb, month = 1, n = 1, ti = 0; 
+    /*b is amount borrowed*/ 
+    /*m is monthly payment amount*/ 
+    /*i is monthly interest to pay*/ 
+    /*pp is principal payment*/ 
+    /*pb is payment balance at the end of that month*/ 
+    /*month is number of month*/ 
+    /*n is the number of payment times*/ 
+    /*ti is the total interest*/ 
+    double air, mir; 
+    /*air is annual interest rate*/ 
+    /*mir is monthly interest rate*/ 
+ 
+    printf("Input principal amount to be borrowed (Yen): ", b); 
+    scanf("%d", &b); 
+    printf("Input monthly payment (Yen): ", m); 
+    scanf("%d", &m); 
+    printf("Input annual interest (%): ", air); 
+    scanf("%lf", &air); 
+ 
+    /*To calculate monthly interest rate, mir = (double)air/12.0 */ 
+    /*To calculate interest, i = b*mir/100 */ 
+    /*To calculate principal payment, pp = m - i */ 
+    /*To calculate payment balance, pb = b - pp */ 
+ 
+    mir = (double)air/12.0; 
+    for(month=1; month<13; month++){ 
+        i = b*mir/100; 
+        pp = m - i;         
+        ti = ti + i; 
+ 
+        if(pb>=0){ 
+            printf("\n"); 
+            printf("Month %d:\n", month); 
+            printf("Payment            : %d yen\n", m); 
+            printf("Principal payment    : %d yen\n", pp); 
+            printf("Interest        : %d yen\n", i); 
+            printf("Payment balance        : %d yen\n", pb = b - pp); 
+            b = pb; 
+            if(pb<m){ 
+                i = pb*mir/100; 
+                m = pb + i; 
+                } 
+            if(pb==0)break;     
+            }     
+        n++; 
+        } 
+    printf("\n"); 
+    printf("Number of payment times    : %d months\n", n); 
+    printf("Total interest        : %d\n", ti); 
+     
+    return 0; 
+} 
